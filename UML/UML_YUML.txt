@@ -1,0 +1,59 @@
+[Ship|
+-shipType: String;
+-size: int;
+-hits: int;
+-coordinates: List|
++Ship(type: String, size: int);
++hit(): void;
++isSunk(): boolean;
++getSize(): int;
++getCoordinates(): List]
+
+[Board|
+-BOARD_SIZE: int;
+-grid: Cell2D;
+-ships: List|
++Board();
++placeShip(ship: Ship, x: int, y: int, vertical: boolean): boolean;
++receiveShot(x: int, y: int): ShotResult;
++isGameOver(): boolean;
++getGrid(): Cell2D]
+
+[GameEngine|
+-myTurn: boolean;
+-gameState: GameState|
++GameEngine(board: Board);
++processShot(x: int, y: int): ShotResult;
++applyOpponentShot(x: int, y: int): ShotResult;
++isMyTurn(): boolean;
++getGameState(): GameState]
+
+[NetworkManager|
+-isHost: boolean;
+-port: int|
++startServer(port: int): void;
++connect(ip: String, port: int): void;
++sendShot(x: int, y: int): void;
++sendResult(result: ShotResult): void;
++disconnect(): void]
+
+[GameController|
++onCellClicked(x: int, y: int): void;
++onShotReceived(x: int, y: int): void;
++onResultReceived(result: ShotResult): void;
++updateView(): void]
+
+[ShotResult|HIT;MISS;SUNK]
+
+[GameState|SETUP;MY_TURN;OPPONENT_TURN;GAME_OVER]
+
+[Cell|EMPTY;SHIP;HIT;MISS]
+
+[GameController]-[GameEngine]
+[GameController]-[NetworkManager]
+[GameEngine]+-[Board]
+[Board]-*[Ship]
+[Board]-[ShotResult]
+[NetworkManager]-[ShotResult]
+[Board]-[Cell]
+[GameEngine]-[GameState]
