@@ -11,13 +11,13 @@
 
 [Board|
 -BOARD_SIZE: int;
--grid: Cell;
+-grid: Cell**;
 -ships: List|
 +Board();
 +placeShip(ship: Ship, x: int, y: int, vertical: boolean): boolean;
 +receiveShot(x: int, y: int): ShotResult;
 +isGameOver(): boolean;
-+getGrid(): Cell]
++getGrid(): Cell**]
 
 [GameEngine|
 -myTurn: boolean;|
