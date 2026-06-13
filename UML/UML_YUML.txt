@@ -11,17 +11,16 @@
 
 [Board|
 -BOARD_SIZE: int;
--grid: Cell2D;
+-grid: Cell;
 -ships: List|
 +Board();
 +placeShip(ship: Ship, x: int, y: int, vertical: boolean): boolean;
 +receiveShot(x: int, y: int): ShotResult;
 +isGameOver(): boolean;
-+getGrid(): Cell2D]
++getGrid(): Cell]
 
 [GameEngine|
--myTurn: boolean;
--gameState: GameState|
+-myTurn: boolean;|
 +GameEngine(board: Board);
 +processShot(x: int, y: int): ShotResult;
 +applyOpponentShot(x: int, y: int): ShotResult;
@@ -51,9 +50,10 @@
 
 [GameController]-[GameEngine]
 [GameController]-[NetworkManager]
-[GameEngine]+-[Board]
-[Board]-*[Ship]
+[GameEngine]+-2[Board]
+[Board]1-5[Ship]
 [Board]-[ShotResult]
 [NetworkManager]-[ShotResult]
-[Board]-[Cell]
-[GameEngine]-[GameState]
+[Board]1-100[Cell]
+[GameEngine]++-1[GameState]
+[Cell]2..5-0..1[Ship]
